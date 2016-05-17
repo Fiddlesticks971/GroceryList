@@ -3,29 +3,29 @@
 DatabaseConnection::DatabaseConnection(string filePath)
 {
   filePath_ = filePath;
-  databaseHandle_ = new sqlite3;
+  //  DatabaseHandle_ = new sqlite3;
 }
 
 DatabaseConnection::DatabaseConnection()
 {
   filePath_ = "";
-  databaseHandle = new sqlite3;
+  //DatabaseHandle = new sqlite3;
 }
 
 int DatabaseConnection::ConnectToDB(string filePath)
 {
-  return sqlile3_open(&filePath,&DatabaseHandle_);
+  return sqlite3_open(filePath.c_str(),&DatabaseHandle_);
 }
 
-int DatabaseConnection::ConnectToDB();
+int DatabaseConnection::ConnectToDB()
 {
   if (filePath_ == "")
     return -1;
-  return sqlite3_open(&filePath_,&DatabaseHandle_);
+  return sqlite3_open(filePath_.c_str(),&DatabaseHandle_);
 }
 
 DatabaseConnection::~DatabaseConnection()
 {
-  delete &filePath_;
-  delete DatabaseHandle_;
+  //delete &filePath_;
+  //delete DatabaseHandle_;
 }

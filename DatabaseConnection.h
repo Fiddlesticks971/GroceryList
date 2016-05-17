@@ -1,7 +1,10 @@
 #ifndef DATABASECONNECTION_H_
 #define DATABASECONNECTION_H_
 
-#include <sqlite3>
+#include <sqlite3.h>
+#include <string>
+
+using namespace std;
 
 class DatabaseConnection
 {
@@ -14,7 +17,7 @@ class DatabaseConnection
   ~DatabaseConnection();
   
  private:
-  sqlite3::sqlite3 *DatabaseHandle_;
+  sqlite3 *DatabaseHandle_;
   string filePath_;
 
 };
