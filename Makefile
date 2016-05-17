@@ -1,5 +1,5 @@
 DatabaseTest: DatabaseTest.o
-	g++ DatabaseTest.o DatabaseConnection.o -o DataBaseTest -lsqlite3 
+	g++ DatabaseTest.o DatabaseConnection.o -o DatabaseTest -lsqlite3 
 DatabaseTest.o: DatabaseTest.cpp DatabaseConnection.o
 	g++ -c DatabaseTest.cpp
 DatabaseConnection.o: DatabaseConnection.cpp DatabaseConnection.h
