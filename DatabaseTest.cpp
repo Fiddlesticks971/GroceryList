@@ -11,6 +11,7 @@ int main(void)
   cout << "enter file path: ";
   cin >> filePath;
   TestDB = new DatabaseConnection(filePath);
-  cout << TestDB->ConnectToDB();
+  cout << TestDB->ConnectToDB() << endl;
+  cout << TestDB->ConnectToTable() << endl;
   return 0;
 }
