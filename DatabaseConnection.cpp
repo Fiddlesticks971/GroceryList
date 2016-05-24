@@ -25,26 +25,28 @@ int DatabaseConnection::ConnectToDB()
   return sqlite3_open(filePath_.c_str(),&DatabaseHandle_);
 }
 
-void DatabaseConnection::ConnectToTable()
+int DatabaseConnection::ConnectToTable()
 {
+  return CreateTable();
 }
 
-void DatabaseConnection::CreateTable()
+int DatabaseConnection::CreateTable()
 {
   string SQL;
-  char* pzTail;
-  sqlite_stmt *ppStmt;
+  const char *pzTail;
+  sqlite3_stmt *ppStmt;
   
-  SQL = "CREATE TABLE main.TestTable (" &_
-    "Key INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," &_
-    "Item TEXT NOT NULL," &_
-    "Description TEXT," &_
-    "LastDateBrought BLOB NOT NULL,"&_
-    "AvgDays INTEGER," &_
+  SQL = "CREATE TABLE main.GroceryList (" 
+    "Key INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," 
+    "Item TEXT NOT NULL," 
+    "Description TEXT," 
+    "LastDateBrought BLOB NOT NULL,"
+    "AvgDays INTEGER," 
     "TimesBrought INTEGER);";
 
-  sqlite3_prepare(DatabaseHandle,SQL.c_str(),SQL.length(),&ppStmt,&pzTail);
-
+  sqlite3_prepare_v2(DatabaseHandle_,SQL.c_str(),SQL.length(),&ppStmt,&pzTail);
+  return sqlite3_step(ppStmt);
+  
 }
 
 

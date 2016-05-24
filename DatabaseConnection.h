@@ -18,7 +18,7 @@ class DatabaseConnection
   ~DatabaseConnection();
   
  private:
-  void CreatTable();
+  int CreateTable();
   sqlite3 *DatabaseHandle_;
   string filePath_;
 
