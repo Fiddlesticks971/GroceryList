@@ -16,6 +16,7 @@ DatabaseConnection::DatabaseConnection()
 int DatabaseConnection::ConnectToDB(string filePath)
 {
   return sqlite3_open(filePath.c_str(),&DatabaseHandle_);
+
 }
 
 int DatabaseConnection::ConnectToDB()
@@ -45,8 +46,8 @@ int DatabaseConnection::CreateTable()
     "TimesBrought INTEGER);";
 
   sqlite3_prepare_v2(DatabaseHandle_,SQL.c_str(),SQL.length(),&ppStmt,&pzTail);
-  return sqlite3_step(ppStmt);
-  
+  sqlite3_step(ppStmt);
+  return sqlite3_finalize(ppStmt);
 }
 
 
