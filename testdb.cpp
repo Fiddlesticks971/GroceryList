@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <sqlite3.h>
 #include "LinkedList.h"
+#include "DatabaseConnection.h"
 
 int callback(void *notUsed,int argc,char **argv, char **colName)
 {
@@ -11,10 +12,13 @@ int callback(void *notUsed,int argc,char **argv, char **colName)
 }
 int main ()
 {
-  sqlite3 *db;
-  char *Err;
-  sqlite3_open("test.db",&db);
-  sqlite3_exec(db,"Select * from employees",callback,0,&Err);
-  sqlite3_close(db);
+  DatabaseConnection *db;
+  db = new DatabaseConnection("test.db");
+  db->ConnectToDB();
+  db->ConnectToTable();
+  db->AddRecord("Eggs","Xtra Large");
+  db->AddRecord("Milk","2%");
+  //sqlite3_exec(db,"Select * from GroceryList",callback,0,&Err);
+  //sqlite3_close(db);
   return 0;
 }

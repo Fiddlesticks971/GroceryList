@@ -41,7 +41,7 @@ int DatabaseConnection::CreateTable()
     "Key INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," 
     "Item TEXT NOT NULL," 
     "Description TEXT," 
-    "LastDateBrought BLOB NOT NULL,"
+    "LastDateBrought BLOB,"
     "AvgDays INTEGER," 
     "TimesBrought INTEGER);";
 
@@ -50,13 +50,25 @@ int DatabaseConnection::CreateTable()
   return sqlite3_finalize(ppStmt);
 }
 
+void DatabaseConnection::AddRecord(string item, string desc)
+{
+  char* Err;
+  string SQLstr;
+  time_t rawtime;
+  struct tm* timeinfo;
+
+  time(&rawtime);
+  timeinfo = localtime(&rawtime);
+  
+  SQLstr = " INSERT INTO GroceryList(Item,Description,LastDateBrought)"
+    "VALUES('" + item + "','" + desc +"','" + to_string(timeinfo->tm_mday) + "/" + to_string(timeinfo->tm_mon) +"/"+ to_string(timeinfo->tm_year + 1900) +"')";
+  cout<<SQLstr<<endl;
+  sqlite3_exec(DatabaseHandle_,SQLstr.c_str(),0,0,&Err);
+}
 
 DatabaseConnection::~DatabaseConnection()
 {
   //delete &filePath_;
   //delete DatabaseHandle_;
 }
-
-
-
 
