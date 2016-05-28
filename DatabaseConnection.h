@@ -18,6 +18,7 @@ class DatabaseConnection
   int ConnectToDB(string filePath);
   int ConnectToTable();
   void AddRecord(string item, string desc);
+  void UpdateRecord(char** item);
   ~DatabaseConnection();
 
   
