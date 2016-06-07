@@ -1,3 +1,4 @@
+
 #include "DatabaseConnection.h"
 
 
@@ -62,6 +63,40 @@ void DatabaseConnection::AddRecord(string item, string desc)
   
   SQLstr = " INSERT INTO GroceryList(Item,Description,LastDateBrought)"
     "VALUES('" + item + "','" + desc +"','" + to_string(timeinfo->tm_mday) + "/" + to_string(timeinfo->tm_mon) +"/"+ to_string(timeinfo->tm_year + 1900) +"')";
+  cout<<SQLstr<<endl;
+  sqlite3_exec(DatabaseHandle_,SQLstr.c_str(),0,0,&Err);
+}
+
+void DatabaseConnection::UpdateRecord(string item)
+{
+  char* Err;
+  string SQLstr , items[6];
+  time_t rawtime;
+  struct tm* timeinfo;
+  int i = 0;
+  
+
+  time(&rawtime);
+  timeinfo = localtime(&rawtime);
+
+  istringstream ss(item);
+  
+  while (!ss.eof())       
+    {
+      string x;               
+      getline( ss, x, ',' );  
+      items[i] = x;
+      i++;
+    }
+  
+  SQLstr = "UPDATE GroceryList "
+           "SET Item = '" + items[1] + "', "
+           "Description = '" + items[2] + "', "
+           "LastDateBrought = '" + to_string(timeinfo->tm_mday) + "/" + to_string(timeinfo->tm_mon) +"/"+ to_string(timeinfo->tm_year + 1900) + "', "
+           "AvgDays = '" + items[4] + "', "
+           "TimesBrought = '" + items[5] + "' "
+           "WHERE Key = " + items[0] + ";";
+  
   cout<<SQLstr<<endl;
   sqlite3_exec(DatabaseHandle_,SQLstr.c_str(),0,0,&Err);
 }

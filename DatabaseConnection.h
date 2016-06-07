@@ -1,3 +1,4 @@
+
 #ifndef DATABASECONNECTION_H_
 #define DATABASECONNECTION_H_
 
@@ -5,6 +6,7 @@
 #include <string>
 #include <ctime>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -18,7 +20,7 @@ class DatabaseConnection
   int ConnectToDB(string filePath);
   int ConnectToTable();
   void AddRecord(string item, string desc);
-  void UpdateRecord(char** item);
+  void UpdateRecord(string item);
   ~DatabaseConnection();
 
   
