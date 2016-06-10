@@ -20,6 +20,7 @@ int main ()
   db->AddRecord("Milk","2%");
   db->UpdateRecord("1,Eggs,Xtra Large, ,5,10");
   db->RemoveRecord("1,Eggs,Xtra Large, ,5,10");
+  db->SQLCommand("SELECT * FROM GroceryList",0,callback);
   //sqlite3_exec(db,"Select * from GroceryList",callback,0,&Err);
   //sqlite3_close(db);
   return 0;

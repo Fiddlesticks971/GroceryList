@@ -22,6 +22,7 @@ class DatabaseConnection
   void AddRecord(string item, string desc);
   void UpdateRecord(string item);
   void RemoveRecord(string item);
+  int SQLCommand(char* SQLString,void *nullItem,int (*callback) (void*,int,char**,char**));
   ~DatabaseConnection();
 
   

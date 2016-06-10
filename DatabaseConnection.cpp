@@ -119,9 +119,13 @@ void DatabaseConnection::RemoveRecord(string item)
   
   SQLstr = "DELETE FROM GroceryList "
            "WHERE Key = " + items[0] + ";";
-  
   cout<<SQLstr<<endl;
   sqlite3_exec(DatabaseHandle_,SQLstr.c_str(),0,0,&Err);
+}
+int DatabaseConnection::SQLCommand(char* SQLString,void *nullItem,int (*callback) (void*,int,char**,char**))
+{
+  char* Err; 
+  return sqlite3_exec(DatabaseHandle_,SQLString,callback,nullItem,&Err);
 }
 
 DatabaseConnection::~DatabaseConnection()
