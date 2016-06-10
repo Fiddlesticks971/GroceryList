@@ -21,6 +21,7 @@ class DatabaseConnection
   int ConnectToTable();
   void AddRecord(string item, string desc);
   void UpdateRecord(string item);
+  void RemoveRecord(string item);
   ~DatabaseConnection();
 
   

@@ -101,6 +101,29 @@ void DatabaseConnection::UpdateRecord(string item)
   sqlite3_exec(DatabaseHandle_,SQLstr.c_str(),0,0,&Err);
 }
 
+void DatabaseConnection::RemoveRecord(string item)
+{
+  char* Err;
+  string SQLstr , items[6];
+  int i = 0;
+
+  istringstream ss(item);
+  
+  while (!ss.eof())       
+    {
+      string x;               
+      getline( ss, x, ',' );  
+      items[i] = x;
+      i++;
+    }
+  
+  SQLstr = "DELETE FROM GroceryList "
+           "WHERE Key = " + items[0] + ";";
+  
+  cout<<SQLstr<<endl;
+  sqlite3_exec(DatabaseHandle_,SQLstr.c_str(),0,0,&Err);
+}
+
 DatabaseConnection::~DatabaseConnection()
 {
   //delete &filePath_;
