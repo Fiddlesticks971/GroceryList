@@ -1,40 +1,54 @@
 import sqlite3
 
 def WelcomeScreen():
-    print("\nWelcome to the Grocery List App")
-    print("Command List:")
-    print("")
-    print("   p -print current list")
-    print("   m -modify list")
-    print("   g -generates list of groceries")  
-    print("   n -new empty list of groceries")
-    print("   e -exit")
-    print("   h -list commands\n\n")
-
+    print("\nWelcome to the Grocery List App\n" +
+          "Command List:\n" +
+          "    p -print current list\n" +
+          "    m -modify list\n" +
+          "    g -generates list of groceries\n" +  
+          "    n -new empty list of groceries\n" +
+          "    e -exit\n" +
+          "    h -list commands\n\n")
+    
+def CreateCurrentList(listItems,connection):
+    cursor = connection.cursor()
+    cursor.execute("CREATE TABLE IF NOT EXISTS CurrentList(keyNum int,item text)")
+    i=1
+    for item in listItems:
+        cursor.execute("INSERT INTO CurrentList VALUES({},'{}')".format(i,item))
+        i=i+1
+    connection.commit()
+    
 def GenList(connection):
-    ListItems = []
+    listItems = []
     newItem = input("Add item to list: ")
     while newItem != "back":
-        ListItems.append(newItem)
+        listItems.append(newItem)
         i=1
-        for thing in ListItems:
+        for thing in listItems:
             print("{}. {}".format(i,thing))
             i=i+1
         newItem = input("Add item to list: ")
+    CreateCurrentList(listItems,connection)
         
 def NewList(connection):
-    ListItems = []
+    listItems = []
     newItem = input("Add item to list: ")
     while newItem != "back":
-        ListItems.append(newItem)
+        listItems.append(newItem)
         i=1
-        for thing in ListItems:
+        for thing in listItems:
             print("{}. {}".format(i,thing))
             i=i+1
         newItem = input("Add item to list: ")
+    CreateCurrentList(listItems,connection)
 
 def PrintList(connection):
-    exit()
+    cursor=connection.cursor()
+    cursor.execute("SELECT * FROM CurrentList")
+    listItem = cursor.fetchall()
+    for i,item in listItem:
+        print("{}. {}".format(i,item))
     
 def CheckInput(connection,command):
     if command == "h":
