@@ -49,6 +49,19 @@ def PrintList(connection):
     listItem = cursor.fetchall()
     for i,item in listItem:
         print("{}. {}".format(i,item))
+
+def  ModifyList(connection):
+    cursor=connection.cursor()
+    command = input("enter command")
+    while command != "back":
+        if command == "p":
+            PrintList()
+        elif command == "r":
+            itemNum = input("Enter number of item to remove:")
+            
+        elif command == "a":
+            
+
     
 def CheckInput(connection,command):
     if command == "h":
@@ -57,6 +70,8 @@ def CheckInput(connection,command):
         GenList(connection)
     elif command == "n":
         NewList(connection)
+    elif command == "m":
+        ModifyList(connection)
     elif command == "p":
         PrintList(connection)
     elif command == "e":
