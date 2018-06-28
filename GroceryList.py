@@ -12,10 +12,17 @@ def WelcomeScreen():
     
 def CreateCurrentList(listItems,connection):
     cursor = connection.cursor()
-    cursor.execute("CREATE TABLE IF NOT EXISTS CurrentList(keyNum int,item text)")
-    i=1
+    cursor.execute("CREATE TABLE IF NOT EXISTS "+
+                   "CurrentList(keyNum int,item text)")
+    cursor.execute("SELECT * "+
+                   "FROM " +
+                   "CurrentList;")
+
+    itemArray=cursor.fetchall()
+    i = len(itemArray)
     for item in listItems:
-        cursor.execute("INSERT INTO CurrentList VALUES({},'{}')".format(i,item))
+        cursor.execute("INSERT INTO CurrentList "+
+                       "VALUES({},'{}')".format(i,item))
         i=i+1
     connection.commit()
     
@@ -31,7 +38,7 @@ def GenList(connection):
         newItem = input("Add item to list: ")
     CreateCurrentList(listItems,connection)
         
-def NewList(connection):
+def AddItems(connection):
     listItems = []
     newItem = input("Add item to list: ")
     while newItem != "back":
@@ -52,24 +59,27 @@ def PrintList(connection):
 
 def  ModifyList(connection):
     cursor=connection.cursor()
-    command = input("enter command")
+    command = input("enter command: ")
     while command != "back":
         if command == "p":
-            PrintList()
+            PrintList(connection)
         elif command == "r":
-            itemNum = input("Enter number of item to remove:")
-            
+            itemNum = input("Enter number of item to remove: ")
         elif command == "a":
+            AddItems(connection)
+        elif command == "d":
+            itemNum = input("delete all items in current list? (y/n): ")
+        elif command == "":
+            item = input("Enter Item to add to the list:")
+        command = input("enter command: ")
             
-
-    
 def CheckInput(connection,command):
     if command == "h":
         WelcomeScreen()
     elif command == "g":
         GenList(connection)
     elif command == "n":
-        NewList(connection)
+        AddItems(connection)
     elif command == "m":
         ModifyList(connection)
     elif command == "p":
